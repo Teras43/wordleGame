@@ -1,0 +1,27 @@
+{
+  "name": "wordlegame",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start:backend": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Teras43/wordleGame.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Teras43/wordleGame/issues"
+  },
+  "homepage": "https://github.com/Teras43/wordleGame#readme",
+  "description": "",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "nodemon": "^2.0.16"
+  }
+}

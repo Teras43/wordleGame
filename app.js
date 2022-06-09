@@ -3,8 +3,19 @@ const tileDisplay = document.querySelector(".tile-container");
 const keyboard = document.querySelector(".key-container");
 const messageDisplay = document.querySelector(".message-container");
 
-/** Winning Wordle Word (Placeholder) */
-const wordle = "SUPER";
+/** Winning Wordle Word */
+let wordle;
+/** Function to get the Wordle word from the API. */
+const getWordle = () => {
+  fetch("http://localhost:8000/word")
+    .then((response) => response.json())
+    .then((json) => {
+      wordle = json.toUpperCase();
+    })
+    .catch((err) => console.log(err));
+};
+getWordle();
+
 /** Pseudo keyboard on page (Array) */
 const keys = [
   "Q",
@@ -67,8 +78,6 @@ guessRows.forEach((guessRow, guessRowIndex) => {
   tileDisplay.append(rowElement);
 });
 
-console.log("GuessRows>Row>Tile: ", guessRows[currentRow]);
-
 /** Creates buttons for the pseudo keyboard on screen */
 keys.forEach((key) => {
   const buttonElement = document.createElement("button");
@@ -92,6 +101,11 @@ const handleClick = (key) => {
   }
 };
 
+let highlightTile = document.getElementById(
+  "guessRow-" + currentRow + "-tile-" + currentTile
+);
+highlightTile.style.border = "2px solid white";
+
 /** Sets the letter squares of the game to the letter guessed. */
 const addLetter = (letter) => {
   const tile = document.getElementById(
@@ -100,7 +114,14 @@ const addLetter = (letter) => {
   tile.textContent = letter;
   guessRows[currentRow][currentTile] = letter;
   tile.setAttribute("data", letter);
+  tile.style.border = "2px solid #3a3a3c";
   currentTile++;
+  if (currentTile < 5) {
+    const nextTile = document.getElementById(
+      "guessRow-" + currentRow + "-tile-" + currentTile
+    );
+    nextTile.style.border = "2px solid white";
+  }
 };
 
 /** Removes the letter currently being put into the game for checking against the wordle word. */
@@ -119,9 +140,16 @@ const deleteLetter = () => {
 /** Takes the current spot of the guess and checks to make sure a 5 letter world has been created. */
 const checkRow = () => {
   const guess = guessRows[currentRow].join("");
+  console.log("guess: ", guess);
 
   if (currentTile > 4) {
-    console.log("Guess is: ", guess, "Wordle is: ", wordle);
+    // fetch(`http://localhost:8000/check/?word=${guess}`)
+    //   .then((res) => res.json())
+    //   .then((json) => {
+    //     console.log(json);
+    //   });
+
+    console.log("Guess is: " + guess, "Wordle is: " + wordle);
     flipTile();
     if (wordle === guess) {
       showMessage("Amazing!");
@@ -135,6 +163,10 @@ const checkRow = () => {
       if (currentRow < 5) {
         currentRow++;
         currentTile = 0;
+        const nextRowTile = document.getElementById(
+          "guessRow-" + currentRow + "-tile-" + currentTile
+        );
+        nextRowTile.style.border = "2px solid white";
       }
     }
   }
