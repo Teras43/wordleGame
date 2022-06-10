@@ -47,6 +47,7 @@ app.get("/word", (req, res) => {
 //     .request(options)
 //     .then((response) => {
 //       console.log(response.data);
+//       res.json(response.data.result_msg)
 //     })
 //     .catch((error) => {
 //       console.error(error);

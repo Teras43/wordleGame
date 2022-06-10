@@ -89,15 +89,17 @@ keys.forEach((key) => {
 
 /** Handles any events that the player will incur. */
 const handleClick = (key) => {
-  if (key === "DELETE") {
-    deleteLetter();
-    return;
-  } else if (key === "ENTER") {
-    checkRow();
-    return;
-  }
-  if (currentTile < 5 && currentRow < 6) {
-    addLetter(key);
+  if (!isGameOver) {
+    if (key === "DELETE") {
+      deleteLetter();
+      return;
+    } else if (key === "ENTER") {
+      checkRow();
+      return;
+    }
+    if (currentTile < 5 && currentRow < 6) {
+      addLetter(key);
+    }
   }
 };
 
@@ -140,14 +142,19 @@ const deleteLetter = () => {
 /** Takes the current spot of the guess and checks to make sure a 5 letter world has been created. */
 const checkRow = () => {
   const guess = guessRows[currentRow].join("");
-  console.log("guess: ", guess);
 
   if (currentTile > 4) {
     // fetch(`http://localhost:8000/check/?word=${guess}`)
     //   .then((res) => res.json())
     //   .then((json) => {
     //     console.log(json);
-    //   });
+    //     if (json == "Entry word not found") {
+    //        showMessage('word not in list')
+    //        return
+    //     } else {
+    //        /** Here is where the below code would go if the api was active. */
+    //     }
+    //   }).catch(err => console.log(err));
 
     console.log("Guess is: " + guess, "Wordle is: " + wordle);
     flipTile();
