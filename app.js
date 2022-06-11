@@ -176,7 +176,7 @@ const checkRow = () => {
     } else {
       if (currentRow >= 5) {
         isGameOver = true;
-        showMessage("Game Over");
+        showMessage("Game Over - Word: " + wordle);
         return;
       }
       if (currentRow < 5) {
@@ -197,7 +197,7 @@ const showMessage = (message) => {
   messageElement.textContent = message;
   messageDisplay.append(messageElement);
   if (message !== "Game Over") {
-    setTimeout(() => messageDisplay.removeChild(messageElement), 2000);
+    setTimeout(() => messageDisplay.removeChild(messageElement), 5000);
   }
 };
 
