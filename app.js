@@ -7,7 +7,7 @@ const messageDisplay = document.querySelector(".message-container");
 let wordle;
 /** Function to get the Wordle word from the API. */
 const getWordle = () => {
-  fetch("http://localhost:8000/word")
+  fetch("https://petalite-equal-clef.glitch.me/word")
     .then((response) => response.json())
     .then((json) => {
       wordle = json.toUpperCase();
@@ -37,7 +37,6 @@ const keys = [
   "J",
   "K",
   "L",
-  "ENTER",
   "Z",
   "X",
   "C",
@@ -46,6 +45,7 @@ const keys = [
   "N",
   "M",
   "DELETE",
+  "ENTER",
 ];
 
 /** Layout of the wordle game squares. */
@@ -85,6 +85,11 @@ keys.forEach((key) => {
   buttonElement.setAttribute("id", key);
   buttonElement.addEventListener("click", () => handleClick(key));
   keyboard.append(buttonElement);
+  if (key === "M" || key === "L" || key === "P") {
+    const lineBreak = document.createElement("div");
+    lineBreak.setAttribute("class", "flex-break");
+    keyboard.append(lineBreak);
+  }
 });
 
 /** Handles any events that the player will incur. */
@@ -156,7 +161,6 @@ const checkRow = () => {
     //     }
     //   }).catch(err => console.log(err));
 
-    console.log("Guess is: " + guess, "Wordle is: " + wordle);
     flipTile();
     if (wordle === guess) {
       showMessage("Amazing!");
