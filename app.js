@@ -134,6 +134,10 @@ const addLetter = (letter) => {
 /** Removes the letter currently being put into the game for checking against the wordle word. */
 const deleteLetter = () => {
   if (currentTile > 0) {
+    const currentHighlightTile = document.getElementById(
+      "guessRow-" + currentRow + "-tile-" + currentTile
+    );
+    currentHighlightTile.style.border = "2px solid #3a3a3c";
     currentTile--;
     const tile = document.getElementById(
       "guessRow-" + currentRow + "-tile-" + currentTile
@@ -141,6 +145,10 @@ const deleteLetter = () => {
     tile.textContent = "";
     guessRows[currentRow][currentTile] = "";
     tile.setAttribute("data", "");
+    const newHighlightTile = document.getElementById(
+      "guessRow-" + currentRow + "-tile-" + currentTile
+    );
+    newHighlightTile.style.border = "2px solid white";
   }
 };
 
